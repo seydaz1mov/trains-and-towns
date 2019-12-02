@@ -2,6 +2,7 @@ package nurbol.seydazimov;
 
 import nurbol.seydazimov.exceptions.InvalidRouteException;
 import nurbol.seydazimov.graph.*;
+import nurbol.seydazimov.graph.helper.DistancePrinter;
 import nurbol.seydazimov.input.InputEdge;
 import nurbol.seydazimov.util.InputFileReader;
 import nurbol.seydazimov.util.Parser;
@@ -22,14 +23,17 @@ public class TrainsAndTownsApp {
                     List<InputEdge> inputEdgeList = parser.parse(inputGraph);
 
                     Graph graph = new Graph();
+                    DistancePrinter printer = new DistancePrinter();
 
                     graph.buildGraph(inputEdgeList);
 
-                    showPathDistance(1, "A-B-C", graph);
-                    showPathDistance(2, "A-D", graph);
-                    showPathDistance(3, "A-D-C", graph);
-                    showPathDistance(4, "A-E-B-C-D", graph);
-                    showPathDistance(5, "A-E-D", graph);
+                    DistanceOfRoute distanceOfRoute = new DistanceOfRoute(graph, printer);
+
+                    distanceOfRoute.show(1, "A-B-C");
+                    distanceOfRoute.show(2, "A-D");
+                    distanceOfRoute.show(3, "A-D-C");
+                    distanceOfRoute.show(4, "A-E-B-C-D");
+                    distanceOfRoute.show(5, "A-E-D");
 
                     TripsWithMaximumThreeStoppageCounter tripsWithMaximumThreeStoppageCounter =
                             new TripsWithMaximumThreeStoppageCounter(graph);
@@ -41,10 +45,10 @@ public class TrainsAndTownsApp {
 
                     tripsWithFourStoppageCounter.compute('A', 'C');
 
-                    ShortestDistance shortestDistance = new ShortestDistance(graph);
+                    ShortestDistance shortestDistance = new ShortestDistance(graph, printer);
 
-                    showDistance(shortestDistance.compute('A', 'C'), 8);
-                    showDistance(shortestDistance.compute('B', 'B'), 9);
+                    shortestDistance.show(8, 'A', 'C');
+                    shortestDistance.show(9, 'B', 'B');
 
                     DifferentRoutesCounter differentRoutesCounter = new DifferentRoutesCounter(graph);
                     differentRoutesCounter.compute('C');
@@ -57,15 +61,5 @@ public class TrainsAndTownsApp {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    static void showPathDistance(int outputNumber, String route, Graph graph) {
-        int distance = graph.distanceOfRoute(route);
-        showDistance(distance, outputNumber);
-    }
-
-    private static void showDistance(int distance, int outputNumber) {
-        System.out.print("Output #" + outputNumber + ": ");
-        System.out.println(distance == -1 ? "NO SUCH ROUTE" : distance);
     }
 }

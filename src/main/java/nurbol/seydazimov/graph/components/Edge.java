@@ -1,10 +1,11 @@
-package nurbol.seydazimov.graph;
+package nurbol.seydazimov.graph.components;
 
-class Edge {
+public class Edge {
+
     public Vertex to;
     public int distance;
 
-    Edge(Vertex to, int distance) {
+    public Edge(Vertex to, int distance) {
         this.to = to;
         this.distance = distance;
     }

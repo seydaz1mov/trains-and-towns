@@ -1,8 +1,12 @@
 package nurbol.seydazimov.graph;
 
+import nurbol.seydazimov.graph.components.Edge;
+import nurbol.seydazimov.graph.components.Vertex;
+
 import java.util.Arrays;
 
 public class TripsWithMaximumThreeStoppageCounter {
+
     final Graph graph;
 
     int[][] count;
