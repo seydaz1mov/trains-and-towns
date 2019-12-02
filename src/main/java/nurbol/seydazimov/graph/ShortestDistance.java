@@ -1,16 +1,27 @@
 package nurbol.seydazimov.graph;
 
+import nurbol.seydazimov.graph.components.Edge;
+import nurbol.seydazimov.graph.components.Vertex;
+import nurbol.seydazimov.graph.helper.DistancePrinter;
+
 import java.util.Arrays;
 
 public class ShortestDistance {
 
     final Graph graph;
+    final DistancePrinter printer;
 
-    public ShortestDistance(final Graph graph) {
+    public ShortestDistance(final Graph graph, final DistancePrinter printer) {
         this.graph = graph;
+        this.printer = printer;
     }
 
-    public int compute(char startTown, char endTown) {
+    public void show(int outputNumber, char startTown, char endTown) {
+        int distance = compute(startTown, endTown);
+        printer.print(distance, outputNumber);
+    }
+
+    private int compute(char startTown, char endTown) {
         boolean[] used = new boolean[5];
         int[] distance = new int[5];
 
